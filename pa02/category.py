@@ -67,7 +67,7 @@ class Category():
         return last_rowid[0]
 
     def update(self,rowid,item):
-        #comment from Jiefang: seems that the note is note updated. Should we update it?
+        #comment from Jiefang: seems that the note is not updated. Should we update it?
         ''' add a category to the categories table.
             this returns the rowid of the inserted element
         '''
@@ -81,7 +81,7 @@ class Category():
         con.close()
 
     def delete(self,rowid):
-        #comment from Jiefang: seems that the note is note updated.Should we update it?
+        #comment from Jiefang: seems that the note is not updated.Should we update it?
         ''' add a category to the categories table.
             this returns the rowid of the inserted element
         '''
