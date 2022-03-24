@@ -79,6 +79,15 @@ class Transactions ():
         con.close()
         return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]}
 
-  
-        
+
+    #author: Huijie
+    def select_all(self):
+        ''' return all of the transactions as a list of dicts.'''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute("SELECT rowid,* from transactions")
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict(tuples)
     
