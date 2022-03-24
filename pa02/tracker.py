@@ -83,6 +83,12 @@ def process_choice(choice):
     elif choice =='4':
         all_transactions  =  transactions.select_all()
         print_transactions(all_transactions)
+    #Author: Yiwen Luo
+    elif choice == '7':
+        month = input("input a month")
+        date = input("intput a date")
+        all_transactions = transactions.get_date_summary(month, date)
+        print(all_transactions)
     elif choice =='8':
         all_transactions  =  transactions.select_all()
         print_transactions(all_transactions)
