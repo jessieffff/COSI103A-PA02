@@ -91,3 +91,13 @@ class Transactions ():
         con.close()
         return to_trans_dict(tuples)
     
+    #author: Huijie
+    def delete(self,rowid):
+        ''' delete a transaction with the input rowid. '''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''DELETE FROM transactions WHERE rowid=(?);''',(rowid,))
+        con.commit()
+        con.close()
+    
+ 
