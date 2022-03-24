@@ -95,6 +95,19 @@ def process_choice(choice):
         month = int(input("month: "))
         transactions_summarized_by_months  =  transactions.summarize_by_month(month)
         print(transactions_summarized_by_months )
+    
+    #author: Huijie
+    elif choice == '9':
+        year = input("the year for summary")
+        select_transactions = transactions.summarize_by_year(year)
+        print(select_transactions)
+
+       #author: Huijie
+    elif choice == '10':
+        cat = input('the category for summary')
+        select_transactions = transactions.summarize_by_cat(cat)
+        print(select_transactions)
+    
     else:
        
         print("choice",choice,"not yet implemented")
