@@ -47,14 +47,15 @@ class Transactions ():
       con.close()
       return to_trans_dict(tuples[0])
     
-    def get_month_summary(self, month, date):
+    def get_date_summary(self, month, date):
       con= sqlite3.connect(self.dbfile)
       cur = con.cursor()
-      cur.execute("SELECT COUNT(rowid), AVERAGE(amount) from transactions WHERE date.month = (?) AND date.date=(?))",(month, date,) )
+      cur.execute("SELECT COUNT(rowid), AVERAGE(amount), MIN(amount), MAX(amount) from transactions WHERE strftime('%m', date) = (?) AND strftime('%d', date))",(month, date,) )
       tuples = cur.fetchall()
       con.commit()
       con.close()
-      return {"total": tuples[0][0], "average_amount": tuples[0][1]}
+      return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]}
+
     #author: Jiefang Li
     def Update(self, rowid, item) :
         '''update the content of a certian transactions'''
