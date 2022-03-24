@@ -13,16 +13,11 @@ import sqlite3
 
 def to_trans_dict(trans_tuple):
     trans = {'rowid': trans_tuple[0], 
-    'item_number': trans_tuple[1], 
+    'item #': trans_tuple[1], 
     'amount': trans_tuple[2], 
     'category': trans_tuple[3], 
     'date': trans_tuple[4], 
     'description': trans_tuple[5]}
-    return trans
-
-    ''' trans is a category tuple (rowid, name, desc)'''
-    trans = {'rowid':trans_tuple[0], 'item#':trans_tuple[1], 'amount':trans_tuple[2], 
-            'category':trans_tuple[3], 'data':trans_tuple[4], 'description':trans_tuple[5]}
     return trans
 
 def to_trans_dict_list(trans_tuples):
@@ -46,12 +41,20 @@ class Transactions ():
     def select_one(self, rowid):
       con= sqlite3.connect(self.dbfile)
       cur = con.cursor()
-      cur.execute("SELECT rowid,* from categories where rowid=(?)",(rowid,) )
+      cur.execute("SELECT rowid,* from transactions where rowid=(?)",(rowid,) )
       tuples = cur.fetchall()
       con.commit()
       con.close()
       return to_trans_dict(tuples[0])
-
+    
+    def get_month_summary(self, month, date):
+      con= sqlite3.connect(self.dbfile)
+      cur = con.cursor()
+      cur.execute("SELECT COUNT(rowid), AVERAGE(amount) from transactions WHERE date.month = (?) AND date.date=(?))",(month, date,) )
+      tuples = cur.fetchall()
+      con.commit()
+      con.close()
+      return {"total": tuples[0][0], "average_amount": tuples[0][1]}
     #author: Jiefang Li
     def Update(self, rowid, item) :
         '''update the content of a certian transactions'''
