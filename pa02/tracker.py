@@ -31,12 +31,13 @@ could be replaced with PostgreSQL or Pandas or straight python lists
 
 '''
 
-#from transactions import Transaction
+from transactions import Transaction
 from category import Category
 import sys
 
-#transactions = Transaction('tracker.db')
+transactions = Transaction('tracker.db')
 category = Category('tracker.db')
+
 
 
 # here is the menu for the tracker app
@@ -46,14 +47,14 @@ menu = '''
 1. show categories
 2. add category
 3. modify category
-4. show transactions
-5. add transaction
-6. delete transaction
-7. summarize transactions by date
-8. summarize transactions by month
-9. summarize transactions by year
-10. summarize transactions by category
-11. print this menu
+4. show transactions - Jiefang Li
+5. add transaction - Qing Liu
+6. delete transaction - Qing Liu
+7. summarize transactions by date - Yiwen Luo
+8. summarize transactions by month - Jiefang Li
+9. summarize transactions by year - Huijie Liu
+10. summarize transactions by category - Huijie Liu
+11. print this menu - Yiwen Luo
 '''
 
 
@@ -78,7 +79,15 @@ def process_choice(choice):
         desc = input("new category description: ")
         cat = {'name':name, 'desc':desc}
         category.update(rowid,cat)
+    #Author: Jiefang Li
+    elif choice =='4':
+        all_transactions  =  transactions.select_all()
+        print_transactions(all_transactions)
+    elif choice =='8':
+        all_transactions  =  transactions.select_all()
+        print_transactions(all_transactions)
     else:
+       
         print("choice",choice,"not yet implemented")
 
     choice = input("> ")
