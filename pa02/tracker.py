@@ -89,6 +89,7 @@ def process_choice(choice):
         date = input("intput a date")
         all_transactions = transactions.get_date_summary(month, date)
         print(all_transactions)
+    #Author: Jiefang Li
     elif choice =='8':
         print("the month you would like to summarize (enter a number)")
         month = int(input("month: "))
