@@ -84,8 +84,10 @@ def process_choice(choice):
         all_transactions  =  transactions.select_all()
         print_transactions(all_transactions)
     elif choice =='8':
-        all_transactions  =  transactions.select_all()
-        print_transactions(all_transactions)
+        print("the month you would like to summarize (enter a number)")
+        month = int(input("month: "))
+        transactions_summarized_by_months  =  transactions.summarize_by_month(month)
+        print(transactions_summarized_by_months )
     else:
        
         print("choice",choice,"not yet implemented")
