@@ -99,13 +99,13 @@ def process_choice(choice):
     #author: Huijie
     elif choice == '9':
         year = input("the year for summary")
-        select_transactions = transactions.select_by_year(year)
+        select_transactions = transactions.summary_by_year(year)
         print(select_transactions)
 
        #author: Huijie
     elif choice == '10':
         cat = input('the category for summary')
-        select_transactions = transactions.select_by_cat(cat)
+        select_transactions = transactions.summary_by_cat(cat)
         print(select_transactions)
     
     else:

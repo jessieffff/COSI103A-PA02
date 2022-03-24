@@ -100,4 +100,22 @@ class Transactions ():
         con.commit()
         con.close()
     
- 
+    #author: Huijie
+    def summary_by_year(self, year):
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(rowid), AVERAGE(amount), MIN(amount), MAX(amount) from transactions WHERE strftime('%Y', date)=(?))",(year,))
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]
+
+    #author: Huijie
+    def summary_by_cat(self, cat):
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute("SELECT COUNT(rowid), AVERAGE(amount), MIN(amount), MAX(amount) from transactions WHERE category=(?))",(cat,))
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]
