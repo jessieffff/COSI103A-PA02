@@ -40,18 +40,6 @@ class Transaction:
         self.dbfile = dbfile
 
     # author: Qing Liu
-    def show(self):
-        ''' show all transactions '''
-        con= sqlite3.connect(self.dbfile)
-        cur = con.cursor()
-        cur.execute('''SELECT rowid,* FROM transactions;''')
-        con.commit()
-        tuples = cur.fetchall()
-        con.commit()
-        con.close()
-        return to_trans_dict_list(tuples)
-
-    # author: Qing Liu
     def add(self, item):
         ''' add one transaction '''
         con = sqlite3.connect(self.dbfile)
@@ -70,6 +58,18 @@ class Transaction:
         con.close()
         return last_rowid[0]
 
+    #author: Jiefang Li
+    def update(self, rowid, item) :
+        '''update the content of a certian transactions'''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''UPDATE transactions
+                        SET item_number =(?), amount=(?), category=(?), date=(?), description=(?)
+                        WHERE rowid=(?);
+        ''',(item['item #'],item['amount'],item['category'],item['date'],item['description'],rowid))
+        con.commit()
+        con.close()
+
     # author: Qing Liu
     def delete(self,rowid):
         ''' delete a transaction with the input rowid. '''
@@ -78,6 +78,40 @@ class Transaction:
         cur.execute('''DELETE FROM transactions WHERE rowid=(?);''',(rowid,))
         con.commit()
         con.close()
+
+    #author:  Huijie Liu
+    def select_all(self):
+        ''' return all of the transactions as a list of dicts.'''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute("SELECT rowid,* from transactions")
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(tuples)
+
+    # author: Yiwen Luo
+    def select_one(self, rowid):
+        '''select one transaction by row id'''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute("SELECT rowid,* from transactions where rowid=(?)",(rowid,) )
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict(tuples[0])
+
+    # author: Qing Liu
+    def show(self):
+        ''' show all transactions '''
+        con= sqlite3.connect(self.dbfile)
+        cur = con.cursor()
+        cur.execute('''SELECT rowid,* FROM transactions;''')
+        con.commit()
+        tuples = cur.fetchall()
+        con.commit()
+        con.close()
+        return to_trans_dict_list(tuples)
 
     # author: Yiwen Luo
     def get_date_summary(self, month, date):
@@ -91,17 +125,7 @@ class Transaction:
         return {"total": results[0][0], "average_amount": results[0][1], "min_amount": results[0][2],
                 "max_amount": results[0][3]}
 
-    #author: Jiefang Li
-    def update(self, rowid, item) :
-        '''update the content of a certian transactions'''
-        con= sqlite3.connect(self.dbfile)
-        cur = con.cursor()
-        cur.execute('''UPDATE transactions
-                        SET item_number =(?), amount=(?), category=(?), date=(?), description=(?)
-                        WHERE rowid=(?);
-        ''',(item['item #'],item['amount'],item['category'],item['date'],item['description'],rowid))
-        con.commit()
-        con.close()
+
 
      #author: Jiefang Li
     def summarize_by_month(self, month):
@@ -115,17 +139,6 @@ class Transaction:
         con.commit()
         con.close()
         return {"total": results[0][0], "average_amount": results[0][1], "min_amount": results[0][2], "max_amount": results[0][3]}
-
-    #author:  Huijie Liu
-    def select_all(self):
-        ''' return all of the transactions as a list of dicts.'''
-        con= sqlite3.connect(self.dbfile)
-        cur = con.cursor()
-        cur.execute("SELECT rowid,* from transactions")
-        tuples = cur.fetchall()
-        con.commit()
-        con.close()
-        return to_trans_dict_list(tuples)
 
     #author: Huijie Liu
     def summary_by_year(self, year):
@@ -153,13 +166,4 @@ class Transaction:
         con.close()
         return {"total": results[0][0], "average_amount": results[0][1], "min_amount": results[0][2], "max_amount": results[0][3]}
 
-    # author: Yiwen Luo
-    def select_one(self, rowid):
-        '''select one transaction by row id'''
-        con= sqlite3.connect(self.dbfile)
-        cur = con.cursor()
-        cur.execute("SELECT rowid,* from transactions where rowid=(?)",(rowid,) )
-        tuples = cur.fetchall()
-        con.commit()
-        con.close()
-        return to_trans_dict(tuples[0])
+

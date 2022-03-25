@@ -117,4 +117,14 @@ id  item #     amount     category   date       description
 choice exit not yet implemented
 > ^Z
 zsh: suspended  python3 tracker.py
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                                      [0m[27m[24m[J(base) jiefang@Jiefangs-MBP pa02 % [K[?2004hpython3 tracker.py[15Dest            [12D[?2004l
+[1m======================================================================================================== test session starts =========================================================================================================[0m
+platform darwin -- Python 3.8.5, pytest-6.1.1, py-1.9.0, pluggy-0.13.1
+rootdir: /Users/jiefang/Library/Mobile Documents/com~apple~CloudDocs/BrandeisCourses/Spring2022/COSI103A/PA02/pa02, configfile: pytest.ini
+[1mcollecting ... [0m[1mcollected 10 items                                                                                                                                                                                                                   [0m
+
+test_category.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                                                                                                                                                                          [ 40%][0m
+test_transaction.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                                                                                                                                                                     [100%][0m
+
+[32m========================================================================================================= [32m[1m10 passed[0m[32m in 0.22s[0m[32m =========================================================================================================[0m
 [1m[7m%[27m[1m[0m                                                                                                                                                                                                                                      [0m[27m[24m[J(base) jiefang@Jiefangs-MBP pa02 % [K[?2004h

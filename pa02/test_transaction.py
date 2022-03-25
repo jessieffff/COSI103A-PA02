@@ -31,7 +31,7 @@ def small_db(empty_db):
     empty_db.delete(id2)
     empty_db.delete(id1)
 
-#Author: Qing Liu
+#author: Qing Liu
 @pytest.mark.add
 def test_add(small_db):
     ''' add a category to db, the select it, then delete it'''
@@ -43,31 +43,26 @@ def test_add(small_db):
     current_db = small_db.select_all()
     assert len(current_db) == len(prev_db) + 1
 
-@pytest.mark.add
-def test_add(small_db):
-    ''' add a category to db, the select it, then delete it'''
-    trans= small_db.select_all()
-    assert len(trans) == 4
-
-#Huijie Liu
+#author: Huijie Liu
 @pytest.mark.select_all
 def test_add(small_db):
     ''' add a category to db, the select it, then delete it'''
     assert len(small_db.select_all()) == 4
 
-#Yiwen Luo
+#author: Yiwen Luo
 @pytest.mark.select_one
 def test_add(small_db):
     ''' add a category to db, the select it, then delete it'''
     t1= small_db.select_one(1)
     assert t1['amount'] == 25
 
-#Author: Jiefang Li
+#author: Jiefang Li
 @pytest.mark.summary_month
 def test_summary_month(small_db):
     transactions = small_db.summarize_by_month('01')
     assert transactions["total"]==1
 
+#author: Jiefang Li
 def test_update(small_db) :
         tran4 ={'item #':'8','amount': 50, 'category': 'transportation', "date": "2022-03-24", "description": "train"} 
         rowid = small_db.add(tran4)
@@ -79,7 +74,6 @@ def test_update(small_db) :
         tran6 = small_db.select_one(rowid)
 
         assert tran6['amount'] == tran5['amount']
-
 
 #author: Huijie Liu
 @pytest.mark.delete
@@ -95,12 +89,14 @@ def test_delete(small_db):
 
     assert len(trans0)==len(trans2)
     assert len(trans2) == len(trans1)-1
-    
+
+#author: Huijie Liu
 @pytest.mark.summary_year
 def test_summary_year(small_db):
     transactions = small_db.summary_by_year('2022')
     assert transactions["total"]==3
-    
+
+#author: Huijie Liu 
 @pytest.mark.category
 def test_summary_cat(small_db):
     transactions = small_db.summary_by_cat('food')
