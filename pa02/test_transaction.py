@@ -31,115 +31,67 @@ def small_db(empty_db):
     empty_db.delete(id2)
     empty_db.delete(id1)
 
-@pytest.fixture
-def med_db(small_db):
-    ''' create a database with 10 more elements than small_db'''
-    rowids=[]
-    # add 10 categories
-    for i in range(10):
-        s = str(i)
-        cat ={'name':'name'+s,
-               'desc':'description '+s,
-                }
-        rowid = small_db.add(cat)
-        rowids.append(rowid)
+#Author: Qing Liu
+@pytest.mark.add
+def test_add(small_db):
+    ''' add a category to db, the select it, then delete it'''
 
-    yield small_db
+    tran4 ={'item #':'3','amount': 50, 'category': 'transportation', "date": "2022-04-24", "description": "gas"} 
 
-    # remove those 10 categories
-    for j in range(10):
-        small_db.delete(rowids[j])
+    prev_db= small_db.select_all()
+    rowid = small_db.add(tran4)
+    current_db = small_db.select_all()
+    assert len(current_db) == len(prev_db) + 1
+
+@pytest.mark.add
+def test_add(small_db):
+    ''' add a category to db, the select it, then delete it'''
+    trans= small_db.select_all()
+    assert len(trans) == 4
+
+#Huijie Liu
+@pytest.mark.select_all
+def test_add(small_db):
+    ''' add a category to db, the select it, then delete it'''
+    assert len(small_db.select_all()) == 4
+
+#Yiwen Luo
+@pytest.mark.select_one
+def test_add(small_db):
+    ''' add a category to db, the select it, then delete it'''
+    t1= small_db.select_one(1)
+    assert t1['amount'] == 25
+
+#Author: Jiefang Li
+@pytest.mark.summary_month
+def test_summary_month(small_db):
+    transactions = small_db.summarize_by_month('01')
+    assert transactions["total"]==1
+
+def test_update(small_db) :
+        tran4 ={'item #':'8','amount': 50, 'category': 'transportation', "date": "2022-03-24", "description": "train"} 
+        rowid = small_db.add(tran4)
+
+        tran5 ={'item #':'9','amount': 90, 'category': 'transportation', "date": "2022-03-22", "description": "ship"} 
+
+        small_db.update(rowid, tran5)
+
+        tran6 = small_db.select_one(rowid)
+
+        assert tran6['amount'] == tran5['amount']
 
 
-
-# @pytest.mark.simple
-# def test_to_cat_dict():
-#     ''' teting the to_cat_dict function '''
-#     a = to_cat_dict((7,'testcat','testdesc'))
-#     assert a['rowid']==7
-#     assert a['name']=='testcat'
-#     assert a['desc']=='testdesc'
-#     assert len(a.keys())==3
-
-
-# @pytest.mark.add
-# def test_add(med_db):
-#     ''' add a category to db, the select it, then delete it'''
-
-#     cat0 = {'name':'testing_add',
-#             'desc':'see if it works',
-#             }
-#     cats0 = med_db.select_all()
-#     rowid = med_db.add(cat0)
-#     cats1 = med_db.select_all()
-#     assert len(cats1) == len(cats0) + 1
-#     cat1 = med_db.select_one(rowid)
-#     assert cat1['name']==cat0['name']
-#     assert cat1['desc']==cat0['desc']
-
-
-# @pytest.mark.delete
-# def test_delete(med_db):
-#     ''' add a category to db, delete it, and see that the size changes'''
-#     # first we get the initial table
-#     cats0 = med_db.select_all()
-
-#     # then we add this category to the table and get the new list of rows
-#     cat0 = {'name':'testing_add',
-#             'desc':'see if it works',
-#             }
-#     rowid = med_db.add(cat0)
-#     cats1 = med_db.select_all()
-
-#     # now we delete the category and again get the new list of rows
-#     med_db.delete(rowid)
-#     cats2 = med_db.select_all()
-
-#     assert len(cats0)==len(cats2)
-#     assert len(cats2) == len(cats1)-1
-
-# @pytest.mark.update
-# def test_update(med_db):
-#     ''' add a category to db, updates it, and see that it changes'''
-
-#     # then we add this category to the table and get the new list of rows
-#     cat0 = {'name':'testing_add',
-#             'desc':'see if it works',
-#             }
-#     rowid = med_db.add(cat0)
-
-#     # now we upate the category
-#     cat1 = {'name':'new cat','desc':'new desc'}
-#     med_db.update(rowid,cat1)
-
-#     # now we retrieve the category and check that it has changed
-#     cat2 = med_db.select_one(rowid)
-#     assert cat2['name']==cat1['name']
-#     assert cat2['desc']==cat1['desc']
-
-# @pytest.mark.summary_date
-# def test_summary_date(small_db):
-#     transactions = small_db.get_date_summary('01', '24')
-#     assert transactions["total"]==1
-
-# @pytest.mark.summary_month
-# def test_summary_month(small_db):
-#     transactions = small_db.summarize_by_month('01')
-#     assert transactions["total"]==1
-
-#author: Huijie
+#author: Huijie Liu
 @pytest.mark.delete
-def test_delete(med_db):
+def test_delete(small_db):
     ''' add a category to db, delete it, and see that the size changes'''
-    # first we get the initial table
-    trans0 = med_db.select_all()
-    # then we add this category to the table and get the new list of rows
+   
+    trans0 = small_db.select_all()
     tran0 = {'item #':'food','amount': 25, 'category': 'food', "date": "2022-01-24", "description": "delicious food"} 
-    rowid = med_db.add(tran0)
-    trans1 = med_db.select_all()
-    # now we delete the category and again get the new list of rows
-    med_db.delete(rowid)
-    trans2 = med_db.select_all()
+    rowid = small_db.add(tran0)
+    trans1 = small_db.select_all()
+    small_db.delete(rowid)
+    trans2 = small_db.select_all()
 
     assert len(trans0)==len(trans2)
     assert len(trans2) == len(trans1)-1
@@ -152,4 +104,4 @@ def test_summary_year(small_db):
 @pytest.mark.category
 def test_summary_cat(small_db):
     transactions = small_db.summary_by_cat('food')
-    assert transactions["total"]=1
+    assert transactions["total"] == 1
