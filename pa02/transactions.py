@@ -30,13 +30,13 @@ class Transaction:
     '''Transaction represents a table of transactions'''
     # author: Yiwen
     def __init__(self, dbfile):
-      self.dbfile = dbfile
-      con = sqlite3.connect(self.dbfile)
+      con = sqlite3.connect(dbfile)
       cur = con.cursor()
       cur.execute('''CREATE TABLE IF NOT EXISTS transactions
                (item_number numeric, amount numeric, category int, date text, description text)''')
       con.commit()
       con.close()
+      self.dbfile = dbfile
 
     # author: Qing Liu
     def show(self):
@@ -76,7 +76,8 @@ class Transaction:
         cur.execute('''DELETE FROM transactions WHERE rowid=(?);''',(rowid,))
         con.commit()
         con.close()
-    
+
+    # author: Yiwen
     def get_date_summary(self, month, date):
       con= sqlite3.connect(self.dbfile)
       cur = con.cursor()
@@ -106,9 +107,6 @@ class Transaction:
         cur.execute(
             "SELECT COUNT(rowid), AVG(amount), MIN(amount), MAX(amount) from transactions WHERE strftime('%m', date) = (?) ",
             (month,))
-
-        # cur.execute('''SELECT rowid, * from transactions, COUNT(rowid), AVERAGE(amount), MIN(amount), MAX(amount) WHERE strftime('%m', date) = (?);
-        # ''',(month,))
         results = cur.fetchall()
         con.commit()
         con.close()
