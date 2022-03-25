@@ -146,5 +146,5 @@ def test_delete(med_db):
     
 @pytest.mark.summary_year
 def test_summary_year(small_db):
-    transactions = small_db.summarize_by_year('2022')
+    transactions = small_db.summary_by_year('2022')
     assert transactions["total"]==3
