@@ -127,3 +127,29 @@ def med_db(small_db):
 #     transactions = small_db.summarize_by_month('01')
 #     assert transactions["total"]==1
 
+#author: Huijie
+@pytest.mark.delete
+def test_delete(med_db):
+    ''' add a category to db, delete it, and see that the size changes'''
+    # first we get the initial table
+    trans0 = med_db.select_all()
+    # then we add this category to the table and get the new list of rows
+    tran0 = {'item #':'food','amount': 25, 'category': 'food', "date": "2022-01-24", "description": "delicious food"} 
+    rowid = med_db.add(tran0)
+    trans1 = med_db.select_all()
+    # now we delete the category and again get the new list of rows
+    med_db.delete(rowid)
+    trans2 = med_db.select_all()
+
+    assert len(trans0)==len(trans2)
+    assert len(trans2) == len(trans1)-1
+    
+@pytest.mark.summary_year
+def test_summary_year(small_db):
+    transactions = small_db.summary_by_year('2022')
+    assert transactions["total"]==3
+    
+@pytest.mark.category
+def test_summary_cat(small_db):
+    transactions = small_db.summary_by_cat('food')
+    assert transactions["total"]=1
