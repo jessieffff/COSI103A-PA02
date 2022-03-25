@@ -143,3 +143,8 @@ def test_delete(med_db):
 
     assert len(trans0)==len(trans2)
     assert len(trans2) == len(trans1)-1
+    
+@pytest.mark.summary_year
+def test_summary_year(small_db):
+    transactions = small_db.summarize_by_year('2022')
+    assert transactions["total"]==3
