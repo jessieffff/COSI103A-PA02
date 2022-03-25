@@ -13,19 +13,19 @@ def dbfile(tmpdir):
 @pytest.fixture
 def empty_db(dbfile):
     ''' create an empty database '''
-    db = Category(dbfile)
+    db = Transactions(dbfile)
     yield db
 
 
 @pytest.fixture
 def small_db(empty_db):
     ''' create a small database, and tear it down later'''
-    cat1 = {'name':'food','desc':'groceries and takeout'}
-    cat2 = {'name':'car','desc':'gas and repairs'}
-    cat3 = {'name':'fun','desc':'movies and dining out'}
-    id1=empty_db.add(cat1)
-    id2=empty_db.add(cat2)
-    id3=empty_db.add(cat3)
+    tran1 = {'item #':'food','amount': 25, 'category': 'food', "date": "2022-01-24", "description": "delicious food"} 
+    tran2 = {'item #':'transportation','amount': 30, 'category': 'food', "date": "2022-04-24", "description": "tickets"} 
+    tran3 ={'item #':'food','transportation': 100, 'category': 'food', "date": "2022-04-24", "description": "gas"} 
+    id1=empty_db.add(tran1)
+    id2=empty_db.add(tran2)
+    id3=empty_db.add(tran3)
     yield empty_db
     empty_db.delete(id3)
     empty_db.delete(id2)
@@ -116,3 +116,12 @@ def test_update(med_db):
     cat2 = med_db.select_one(rowid)
     assert cat2['name']==cat1['name']
     assert cat2['desc']==cat1['desc']
+
+@pytest.mark.summary_date
+def test_summary_date(small_db):
+    transactions = Transactions(small_db).test_summary_date("Jan", 24)
+    expected = [
+      {'item #':'1','amount': 25, 'category': 'food', "date": "2022-01-24", "description": "delicious food"} 
+    ]
+    assert transactions["item #"]==expected[0]["item #"]
+

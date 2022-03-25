@@ -29,13 +29,14 @@ class Transactions ():
     '''Transactions represents a table of transactions'''
     # author: Yiwen
     def __init__(self, dbfile):
+      self.dbfile = dbfile
       con = sqlite3.connect(self.dbfile)
       cur = con.cursor()
       cur.execute('''CREATE TABLE IF NOT EXISTS transactions 
                 (item_number numeric, amount numeric, category text, date date, description text)''')
       con.commit()
       con.close()
-      self.dbfile = dbfile
+      
 
     # author: Yiwen
     def select_one(self, rowid):
@@ -108,7 +109,7 @@ class Transactions ():
         tuples = cur.fetchall()
         con.commit()
         con.close()
-        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]
+        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]}
 
     #author: Huijie
     def summary_by_cat(self, cat):
@@ -118,4 +119,4 @@ class Transactions ():
         tuples = cur.fetchall()
         con.commit()
         con.close()
-        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]
+        return {"total": tuples[0][0], "average_amount": tuples[0][1], "min_amount": tuples[0][2], "max_amount": tuple[0][3]}
