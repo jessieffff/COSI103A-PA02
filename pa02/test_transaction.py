@@ -148,3 +148,8 @@ def test_delete(med_db):
 def test_summary_year(small_db):
     transactions = small_db.summary_by_year('2022')
     assert transactions["total"]==3
+    
+@pytest.mark.category
+def test_summary_cat(small_db):
+    transactions = small_db.summary_by_cat('food')
+    assert transactions["total"]=1
