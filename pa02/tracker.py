@@ -88,13 +88,13 @@ def process_choice(choice):
         print("adding transaction")
         itemNumber = int(input("item #: "))
         amount = input("amount: ")
-        category = int(input("category (by rowid): "))
+        cat = int(input("category (by rowid): "))
         description = input("description: ")
         date = datetime.now().strftime("%Y-%m-%d")
         transaction.add(tx.to_trans_dict((-1, # a filler value
                                            itemNumber,
                                            amount,
-                                           category,
+                                           cat,
                                            date,
                                            description,
                                            )))

@@ -117,13 +117,13 @@ def med_db(small_db):
 #     assert cat2['name']==cat1['name']
 #     assert cat2['desc']==cat1['desc']
 
-@pytest.mark.summary_date
-def test_summary_date(small_db):
-    transactions = small_db.get_date_summary('01', '24')
-    assert transactions["total"]==1
+# @pytest.mark.summary_date
+# def test_summary_date(small_db):
+#     transactions = small_db.get_date_summary('01', '24')
+#     assert transactions["total"]==1
 
-@pytest.mark.summary_month
-def test_summary_month(small_db):
-    transactions = small_db.summarize_by_month('01')
-    assert transactions["total"]==1
+# @pytest.mark.summary_month
+# def test_summary_month(small_db):
+#     transactions = small_db.summarize_by_month('01')
+#     assert transactions["total"]==1
 
